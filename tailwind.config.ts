@@ -12,8 +12,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#053B50",
-        secondary: "#A73121",
+        primary: "#000",
       },
     },
   },

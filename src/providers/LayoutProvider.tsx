@@ -20,7 +20,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       
   return (
     // <Provider store={store}>
-        <div className='md:px-20 px-3'>
+        <div>
 
             {!isPublic && (
                 <div className="header bg-gray-800 px-5 py-4 flex justify-between items-center">
@@ -37,7 +37,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
         
         
                     <div className="flex gap-5 items-center">
-                        <Badge content='3'>
+                        z<Badge content='3'>
                             <i
                             className="ri-shopping-cart-line text-white text-2xl cursor-pointer"
                             onClick={() => {
@@ -80,9 +80,9 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                 </div>
             )}
 
-            <div className="px-5 py-3">
+            <>
                 {children}
-            </div>
+            </>
 
         </div>
     // </Provider>
