@@ -14,7 +14,7 @@ export async function GET(req: NextRequest,{params}: {params: {product_id: strin
     const user =await User.findById(userid);
     if(!user?.isAdmin) return NextResponse.json({ message: "Not authorized" }, { status: 401 });
 
-    const product = await Product.findById(params.product_id);
+    const product = await Product.findById(params.product_id).populate("category");
     return NextResponse.json({ data: product },{status:200});
   } catch (error : any) {
     return NextResponse.json({ message: error.message },{status:500});

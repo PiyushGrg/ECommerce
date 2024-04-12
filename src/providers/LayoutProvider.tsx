@@ -37,7 +37,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
         
         
                     <div className="flex gap-5 items-center">
-                        z<Badge content='3'>
+                        <Badge content='3'>
                             <i
                             className="ri-shopping-cart-line text-white text-2xl cursor-pointer"
                             onClick={() => {

@@ -1,11 +1,10 @@
+'use client';
 import { getCatchErrorMessage } from "@/helpers/ErrorMessages";
 import { Button, Table, TableHeader, TableColumn, TableRow, TableCell, getKeyValue, TableBody, Tooltip} from "@nextui-org/react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import React from "react";
 import CategoryForm from "./CategoryForm";
-import DeleteButton from "@/components/DeleteButton";
-import EditButton from "@/components/EditButton";
 import { CategoryType } from "@/interfaces";
 import { EditIcon } from './icons/EditIcon';
 import { DeleteIcon } from './icons/DeleteIcon';
