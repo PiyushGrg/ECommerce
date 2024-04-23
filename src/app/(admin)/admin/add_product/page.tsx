@@ -7,16 +7,19 @@ import toast from "react-hot-toast";
 import PageTitle from "@/components/PageTitle";
 import { useRouter } from "next/navigation";
 import { uploadImages } from "@/helpers/imageUploadAndDelete";
+import { useDispatch } from "react-redux";
+import { SetLoading } from "@/redux/LoadersSlice";
 
 function AddProduct() {
 
   const [files, setFiles] = React.useState<any>([]);
-  const [loading, setLoading] = React.useState(false);
+  
+  const dispatch = useDispatch();
   const router = useRouter();
   
   const onFinish = async (values: any) => {
     try {
-        setLoading(true);
+        dispatch(SetLoading(true));
         values.images = await uploadImages(files);
         await axios.post("/api/admin/products", values);
         toast.success("Product Added Successfully");
@@ -25,7 +28,7 @@ function AddProduct() {
     } catch (error: any) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      dispatch(SetLoading(false));
     }
   };
 

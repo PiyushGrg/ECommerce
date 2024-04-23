@@ -8,24 +8,27 @@ import CategoryForm from "./CategoryForm";
 import { CategoryType } from "@/interfaces";
 import { EditIcon } from './icons/EditIcon';
 import { DeleteIcon } from './icons/DeleteIcon';
+import { useDispatch } from "react-redux";
+import { SetLoading } from "@/redux/LoadersSlice";
 
 function CategoriesList() {
 
   const [showCategoryForm, setShowCategoryForm] = React.useState(false);
   const [selectedCategory, setSelectedCategory] = React.useState<CategoryType>();
   const [categories, setCategories] = React.useState<CategoryType[]>([]);
-  const [loading, setLoading] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const getCategories = async () => {
     try {
-      setLoading(true);
+      dispatch(SetLoading(true));
       const response = await axios.get("/api/admin/categories");
       setCategories(response.data.data);
 
     } catch (error : any) {
       toast.error(getCatchErrorMessage(error));
     } finally {
-      setLoading(false);
+      dispatch(SetLoading(false));
     }
   };
 
@@ -35,7 +38,7 @@ function CategoriesList() {
 
   const onDelete = async (id: string) => {
     try {
-      setLoading(true);
+      dispatch(SetLoading(true));
       await axios.delete(`/api/admin/categories/${id}`);
       toast.success("Category Deleted Successfully");
       getCategories();
@@ -43,7 +46,7 @@ function CategoriesList() {
     } catch (error : any) {
       toast.error(getCatchErrorMessage(error));
     } finally {
-      setLoading(false);
+      dispatch(SetLoading(false));
     }
   };
 

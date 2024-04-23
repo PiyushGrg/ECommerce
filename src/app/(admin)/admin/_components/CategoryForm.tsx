@@ -4,6 +4,8 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { getCatchErrorMessage } from "@/helpers/ErrorMessages";
 import ModalTitle from "@/components/ModalTitle";
+import { useDispatch } from "react-redux";
+import { SetLoading } from "@/redux/LoadersSlice";
 
 
 interface CategoryFormProps {
@@ -22,15 +24,16 @@ function CategoryForm({
   reloadCategories,
 }: CategoryFormProps) {
   
-    const [loading, setLoading] = React.useState(false);
     const [category,setCategory] = React.useState<any>({
       name: '',
       description: ''
     });
 
+    const dispatch = useDispatch();
+
   const onFinish = async () => {
     try {
-      setLoading(true);
+      dispatch(SetLoading(true));
       let response;
       if (selectedCategory) {
         response = await axios.put(
@@ -47,7 +50,7 @@ function CategoryForm({
     } catch (error : any) {
         toast.error(getCatchErrorMessage(error));
     } finally {
-      setLoading(false);
+        dispatch(SetLoading(false));
     }
   };
 
@@ -90,7 +93,7 @@ function CategoryForm({
               <ModalFooter>
                 <div className="flex justify-end gap-5">
                   <Button onClick={() => setShowCategoryForm(false)}>Cancel</Button>
-                  <Button color="primary" isLoading={loading} onClick={onFinish}>
+                  <Button color="primary" onClick={onFinish}>
                     Submit
                   </Button>
                 </div>

@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Image from "next/image";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { SetLoading } from "@/redux/LoadersSlice";
 
 interface ProductFormProps {
     onFinish: any;
@@ -19,18 +21,19 @@ function ProductForm({ onFinish, initialValues, files, setFiles }: ProductFormPr
         initialValues?.images || []
     );
     const [categories, setCategories] = React.useState<any>([]);
-    const [loading, setLoading] = React.useState<boolean>(false);
+    
+    const dispatch = useDispatch();
 
     const getCategories = async () => {
         try {
-            setLoading(true);
+            dispatch(SetLoading(true));
             const response = await axios.get("/api/admin/categories");
             setCategories(response.data.data);
 
         } catch (error: unknown) {
             toast.error(getCatchErrorMessage(error));
         } finally {
-            setLoading(false);
+            dispatch(SetLoading(false));
         }
     };
 

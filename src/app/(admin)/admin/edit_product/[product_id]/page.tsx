@@ -7,18 +7,21 @@ import PageTitle from "@/components/PageTitle";
 import { useRouter } from "next/navigation";
 import ProductForm from "../../_components/ProductForm";
 import { deleteImages, uploadImages } from "@/helpers/imageUploadAndDelete";
+import { useDispatch } from "react-redux";
+import { SetLoading } from "@/redux/LoadersSlice";
 
 function EditProduct({ params }: { params: any }) {
 
   const [files, setFiles] = React.useState<any>([]);
   const id = params.product_id;
   const [product, setProduct] = React.useState<any>(null);
-  const [loading, setLoading] = React.useState(false);
+  
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const onFinish = async (values: any) => {
     try {
-      setLoading(true);
+      dispatch(SetLoading(true));
 
       // delete images
       const imagesToDelete = product.images.filter(
@@ -35,19 +38,19 @@ function EditProduct({ params }: { params: any }) {
     } catch (error: any) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      dispatch(SetLoading(false));
     }
   };
 
   const getProduct = async () => {
     try {
-      setLoading(true);
+      dispatch(SetLoading(true));
       const response = await axios.get(`/api/admin/products/${id}`);
       setProduct(response.data.data);
     } catch (error: any) {
       toast.error(error.message);
     } finally {
-      setLoading(false);
+      dispatch(SetLoading(false));
     }
   };
 

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { getCatchErrorMessage } from "@/helpers/ErrorMessages";
-// import { SetLoading } from "@/redux/LoadersSlice";
+import { SetLoading } from "@/redux/LoadersSlice";
 import toast from "react-hot-toast";
 import axios from "axios";
 import React, { useEffect } from "react";
@@ -19,13 +19,13 @@ function Filters() {
   const dispatch = useDispatch();
   const getCategories = async () => {
     try {
-    //   dispatch(SetLoading(true));
+      dispatch(SetLoading(true));
       const response = await axios.get("/api/admin/categories");
       setCategories(response.data.data);
     } catch (error: any) {
       toast.error(getCatchErrorMessage(error));
     } finally {
-    //   dispatch(SetLoading(false));
+      dispatch(SetLoading(false));
     }
   };
   React.useEffect(() => {

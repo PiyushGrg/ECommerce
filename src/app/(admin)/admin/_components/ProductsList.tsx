@@ -9,23 +9,26 @@ import axios from "axios";
 import { ProductType } from "@/interfaces";
 import { EditIcon } from './icons/EditIcon';
 import { DeleteIcon } from './icons/DeleteIcon';
+import { useDispatch } from "react-redux";
+import { SetLoading } from "@/redux/LoadersSlice";
 
 function ProductsList() {
 
   const [products, setProducts] = React.useState<ProductType[]>([]);
-  const [loading, setLoading] = React.useState<boolean>(false);
+  
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const getProducts = async () => {
     try {
-      setLoading(true);
+      dispatch(SetLoading(true));
       const response = await axios.get("/api/admin/products");
       setProducts(response.data.data);
 
     } catch (error : any) {
       toast.error(getCatchErrorMessage(error));
     } finally {
-      setLoading(false);
+      dispatch(SetLoading(false));
     }
   };
 
@@ -35,7 +38,7 @@ function ProductsList() {
 
   const onDelete = async (id: string) => {
     try {
-      setLoading(true);
+      dispatch(SetLoading(true));
       await axios.delete(`/api/admin/products/${id}`);
       toast.success("Product Deleted Successfully");
       getProducts();
@@ -43,7 +46,7 @@ function ProductsList() {
     } catch (error : any) {
       toast.error(getCatchErrorMessage(error));
     } finally {
-      setLoading(false);
+      dispatch(SetLoading(false));
     }
   };
 

@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Provider } from "react-redux";
 import { Badge, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 import { useClerk } from "@clerk/nextjs";
 import { useUser } from "@clerk/clerk-react";
-// import store from "@/redux/Store";
+import store from "@/redux/Store";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 
 function LayoutProvider({ children }: { children: React.ReactNode }) {
@@ -15,11 +17,30 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
 
     const router = useRouter();
     const pathname = usePathname();
-    const isPublic = pathname === "/sign-in" || pathname === "/sign-up";
+    const isPublic = pathname.includes("/sign-up") || pathname.includes("/sign-in");
 
+    const [isAdmin, setIsAdmin] = React.useState(false);
+
+    const getUserData = async () => {
+        try {
+          const response = await axios.get("/api/current-user");
+          if (response.data.user.isAdmin) {
+            setIsAdmin(true);
+          }
+        } catch (error: any) {
+          toast.error(error.message);
+        }
+      };
+    
+    useEffect(() => {
+        if (!isPublic) {
+          getUserData();
+        }
+    }, []);
+    
       
   return (
-    // <Provider store={store}>
+    <Provider store={store}>
         <div>
 
             {!isPublic && (
@@ -31,7 +52,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                         router.refresh();
                     }}
                     >
-                    E <span className="text-yellow-500 font-semibold">Shop</span>
+                    E <span className="text-yellow-500 font-semibold">Mart</span>
                     </h1>
 
         
@@ -55,12 +76,12 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                                     <div
                                         className="flex gap-2 items-center cursor-pointer text-md"
                                         onClick={() => {
-                                            router.push("/profile");
+                                            router.push("/admin");
                                             router.refresh();
                                         }}
                                     >
                                         <i className="ri-shield-user-line"></i>
-                                        <span>Profile</span>
+                                        <span>Admin</span>
                                     </div>
 
                                     <div
@@ -80,20 +101,20 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                 </div>
             )}
 
-            {!isPublic && (
-                <div className="mx-5">
-                    {children}
-                </div>
-            )}
-
             {isPublic && (
                 <div>
                     {children}
                 </div>
             )}
 
+            {(!isPublic && (!isAdmin && pathname.includes("admin")) ) ? "You are not authorized to view this page" :
+                <div className="mx-5">
+                    {children}
+                </div>
+            }
+
         </div>
-    // </Provider>
+    </Provider>
   );
 }
 
