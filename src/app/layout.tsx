@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "antd/dist/reset.css";
 import UIProvider from "@/providers/UIProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import LayoutProvider from "@/providers/LayoutProvider";

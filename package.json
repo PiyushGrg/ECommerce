@@ -12,7 +12,7 @@
     "@clerk/nextjs": "^4.29.10",
     "@nextui-org/react": "^2.2.10",
     "@reduxjs/toolkit": "^2.2.3",
-    "antd": "^5.16.1",
+    "antd": "^5.16.4",
     "axios": "^1.6.8",
     "firebase": "^10.10.0",
     "framer-motion": "^11.0.24",

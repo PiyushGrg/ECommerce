@@ -3,7 +3,7 @@ import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Provider } from "react-redux";
 import { Badge, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
-import { UserButton, useClerk } from "@clerk/nextjs";
+import { useClerk } from "@clerk/nextjs";
 import { useUser } from "@clerk/clerk-react";
 // import store from "@/redux/Store";
 
@@ -80,9 +80,17 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                 </div>
             )}
 
-            <>
-                {children}
-            </>
+            {!isPublic && (
+                <div className="mx-5">
+                    {children}
+                </div>
+            )}
+
+            {isPublic && (
+                <div>
+                    {children}
+                </div>
+            )}
 
         </div>
     // </Provider>
