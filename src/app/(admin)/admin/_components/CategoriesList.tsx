@@ -81,6 +81,10 @@ function CategoriesList() {
         return (
           cellValue
         );
+      case "createdAt":
+        return (
+          new Date(cellValue).toLocaleTimeString() + " " + new Date(cellValue).toLocaleDateString()
+        );
       case "actions":
         return (
           <div className="relative flex items-center gap-2">

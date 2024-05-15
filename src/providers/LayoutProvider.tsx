@@ -87,7 +87,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                                     <div
                                         className="flex gap-2 items-center cursor-pointer text-md"
                                         onClick={() => signOut(() => {
-                                            router.push("/");
+                                            router.push("/sign-in");
                                             router.refresh();
                                         })}
                                     >
@@ -107,11 +107,13 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                 </div>
             )}
 
-            {(!isPublic && (!isAdmin && pathname.includes("admin")) ) ? "You are not authorized to view this page" :
-                <div className="mx-5">
-                    {children}
-                </div>
-            }
+            {(!isPublic) ? (
+                (!isAdmin && pathname.includes("admin")) ? (
+                    "You are not authorized to view this page"
+                ) : (
+                    <div className="mx-5">{children}</div>
+                )
+            ) : null}
 
         </div>
     </Provider>

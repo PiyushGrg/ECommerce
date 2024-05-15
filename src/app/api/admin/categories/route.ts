@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: "Not authorized" },{status: 401});
     }
 
-    const categories = await Category.find({});
+    const categories = await Category.find({}).sort({ createdAt: -1 });
     return NextResponse.json({ data: categories },{status: 200});
 
   } catch (error : any) {
