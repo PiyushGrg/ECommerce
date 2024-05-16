@@ -3,7 +3,6 @@ import "./globals.css";
 import UIProvider from "@/providers/UIProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import LayoutProvider from "@/providers/LayoutProvider";
-import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "ECommerce",
@@ -33,10 +32,6 @@ export default function RootLayout({
       <html lang="en">
         <head>
           {" "}
-          <Script
-            src="https://widget.cloudinary.com/v2.0/global/all.js"
-            type="text/javascript"
-          />
           <link
             href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
             rel="stylesheet"

@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const ThankYou = () => {
   return (
-    <div>ThankYou</div>
+    <Suspense>
+      <div>
+        <h1>Thank you for your purchase!</h1>
+      </div>
+    </Suspense>
   )
 }
 
